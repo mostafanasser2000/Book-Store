@@ -1,0 +1,23 @@
+services:
+  web:
+    build: .
+    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+    volumes:
+      - .:/code
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    environment:
+      - "DJANGO_SECRET_KEY=django-insecure-las_ug6+k648%cif7t2yw_#-(fp2bgc4)y9qd$$8w8+h+v+z9p&"
+      - "DJANGO_DEBUG=True"
+
+  db:
+    image: postgres:14.5
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
+
+volumes:
+  postgres_data:
