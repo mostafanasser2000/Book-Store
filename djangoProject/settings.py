@@ -149,9 +149,9 @@ ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 
 # email configuration
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-DEFAULT_FROM_EMAIL = "mustafanasser503@gmail.com"
+DEFAULT_FROM_EMAIL = env("EMAIL_USER")
 EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_USER = env.get("EMAIL_USER")
-EMAIL_HOST_PASSWORD = env.get("EMAIL_PASSWORD")
+EMAIL_HOST_USER = env("EMAIL_USER")
+EMAIL_HOST_PASSWORD = env("EMAIL_PASSWORD")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
