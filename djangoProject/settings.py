@@ -127,6 +127,8 @@ STATIC_ROOT = (
     BASE_DIR / "staticfiles"
 )  # the folder where static files will be when we run collectstatic command
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFileStorage"  # define file storage engine used when collecting static files
+MEDIA_ROOT = BASE_DIR / "media" # the absolute file system path to the directory for user uploaded files
+MEDIA_URL = "/media/"  # is the url for serving media files
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
