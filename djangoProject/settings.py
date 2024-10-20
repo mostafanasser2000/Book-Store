@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     "allauth",
     "allauth.account",
+    "debug_toolbar",
     # Local
     "accounts.apps.AccountsConfig",
     "pages.apps.PagesConfig",
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "django.middleware.cache.UpdateCacheMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -48,6 +50,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",  # new
+    "django.middleware.cache.FetchFromCacheMiddleware",
 ]
 
 ROOT_URLCONF = "djangoProject.urls"
@@ -127,7 +131,9 @@ STATIC_ROOT = (
     BASE_DIR / "staticfiles"
 )  # the folder where static files will be when we run collectstatic command
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFileStorage"  # define file storage engine used when collecting static files
-MEDIA_ROOT = BASE_DIR / "media" # the absolute file system path to the directory for user uploaded files
+MEDIA_ROOT = (
+    BASE_DIR / "media"
+)  # the absolute file system path to the directory for user uploaded files
 MEDIA_URL = "/media/"  # is the url for serving media files
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -157,3 +163,15 @@ EMAIL_HOST_USER = env("EMAIL_USER")
 EMAIL_HOST_PASSWORD = env("EMAIL_PASSWORD")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+
+# configuration for debug toolbar
+import socket
+
+hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+INTERNAL_IPS = [ip[:-1] + "1" for ip in ips]
+
+# Cache configurations
+CACHE_MIDDLEWARE_ALIAS = "default"
+CACHE_MIDDLEWARE_SECONDS = 604800
+CACHE_MIDDLEWARE_KEY_PREFIX = ""
